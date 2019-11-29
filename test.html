@@ -1,0 +1,72 @@
+<script>
+	const dob = "10/05/1998";
+	const height = "6'3";
+	const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+	displayDaysMonthsAgeAndHeight(dob,height);
+
+	function displayDaysMonthsAgeAndHeight(dt,ht) {
+		const dtDMY = dt.split("/");
+		const dtChristmas = new Date(dtDMY[2],11,25);
+  		var dtDOB = new Date(dtDMY[2],dtDMY[1] - 1, dtDMY[0]);
+		const dtNextYear = new Date(dtDOB.getFullYear() + 1, dtDMY[1] - 1, dtDMY[0]);
+		console.log("Days until christmas:" + getDaysDuration(dtDOB, dtChristmas) );
+		console.log("List of Months (going backwards) since your last birthday:" + getMonths(dtDOB,dtNextYear).toString());
+		var age = getAge(dtDOB);
+		console.log("Age:" + age);
+
+		if(age >=20 && age<=30) {
+			displayHeight(height);
+		}
+	}
+
+	function getDaysDuration(dtFrom, dtTo) {
+		const dayTimeValue = 1000 * 60 * 60 * 24;
+		var duration = Math.round(dtTo.getTime() - dtFrom.getTime()) / (dayTimeValue);
+		return duration.toFixed(0);
+	}
+
+	function getMonths(dtFrom, dtTo) {
+		var monthDuration;
+		var currentMonth = dtFrom.getMonth() + 1;
+		var returnMonths = [];
+		monthDuration = (dtTo.getFullYear() - dtFrom.getFullYear()) * 12;
+		monthDuration -= dtFrom.getMonth() + 1;
+		monthDuration += dtTo.getMonth();
+		monthDuration = monthDuration <= 0 ? 0 : monthDuration + 1;
+
+		for (var i = 0; i < monthDuration; i++) {
+			var monthIndex= currentMonth + i;
+			if (monthIndex > 11) {
+				monthIndex = (currentMonth + i) - 12;
+			}
+			returnMonths.push(months[monthIndex]);
+		}
+
+ 		return returnMonths;  
+	}
+
+	function getAge(dtDOB) {
+		return Math.floor((new Date() - dtDOB.getTime()) / 3.15576e+10);
+	}
+
+	function displayHeight(ht) {
+		ht = ht.split("'");
+		var ft = "";
+		var inch = "";
+		for(var i =0; i<ht[0]; i++) {
+			ft += "&"
+		}
+
+		if (ht[1]) {
+			for(var i =0; i<ht[1]; i++) {
+			inch += "()"
+		}
+	}
+  	if(ft != "")
+  		console.log(ft);
+
+	if(inch != "")
+  		console.log(inch);
+	}
+</script>
